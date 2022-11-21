@@ -2,13 +2,6 @@
 // Made by Carter Rows
 // November 2022
 
-// MAYBE USEFUL LATER:
-//  printf("User:\t%s\n", ourUser.name);
-//  printf("Longtitude:\t%lf\n", ourUser.longtitude);
-//  printf("Latitude:\t%lf\n", ourUser.latitude);
-//  printf("Altitude:\t%lf\n", ourUser.altitude);
-//  printf("Time:\t%lf\n", ourUser.time);
-
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
