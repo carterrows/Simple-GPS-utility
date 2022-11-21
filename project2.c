@@ -15,8 +15,15 @@ typedef struct user
     double time;
 } user;
 
+typedef struct position
+{
+    char name[50];
+    double distance;
+} position;
+
 user scanUser();
 void scanOtherUsers(user temp[], int n);
+void findDistances(user origin, user temp1[], position temp2[], int n);
 
 int main()
 {
@@ -61,7 +68,6 @@ int main()
         printf("\nLatitude = %lf", otherUsers[0].latitude);
         printf("\nAltitude = %lf", otherUsers[0].altitude);
         printf("\nTime = %lf\n", otherUsers[0].time);
-
     }
 
     else
@@ -101,4 +107,9 @@ void scanOtherUsers(user temp[], int n)
         printf("\n");
         temp[i] = scanUser();
     }
+}
+
+void findDistances(user origin, user temp1[], position temp2[], int n)
+{
+    
 }
