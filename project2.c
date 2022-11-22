@@ -1,5 +1,6 @@
 // Mini Project 2
-// Made by Carter Rows
+// For ENGG1410
+// Made by Carter Rows - 1170615
 // November 2022
 
 #include <stdio.h>
