@@ -24,6 +24,7 @@ typedef struct position
 user scanUser();
 void scanOtherUsers(user temp[], int n);
 void findDistances(user origin, user temp1[], position temp2[], int n);
+position findClosestUser(position temp2[], int n);
 
 int main()
 {
@@ -44,13 +45,13 @@ int main()
     char f[10] = "file";
     char m[10] = "manual";
     printf("\nWould you like to manually enter other user data or use a file?\nPlease type 'file' or 'manual'\n\n");
-    scanf("%s", &choice);
+    scanf("%s", choice);
 
     if(strcmp(choice, f) == 0)
     {
         char fileName[50];
         printf("Enter file name for the data:\t");
-        scanf("%s", &fileName);
+        scanf("%s", fileName);
     }
 
     else if(strcmp(choice, m) == 0)
@@ -62,12 +63,16 @@ int main()
 
         scanOtherUsers(otherUsers, userCount);
 
-        printf("\nUser 1's data:\n\n");
-        printf("Name: %s", otherUsers[0].name);
-        printf("\nLongtitude = %lf", otherUsers[0].longtitude);
-        printf("\nLatitude = %lf", otherUsers[0].latitude);
-        printf("\nAltitude = %lf", otherUsers[0].altitude);
-        printf("\nTime = %lf\n", otherUsers[0].time);
+        position otherUserPosition[userCount];
+
+        findDistances(myUser, otherUsers, otherUserPosition, userCount);
+
+        position closestUser;
+        closestUser = findClosestUser(otherUserPosition, userCount);
+
+        printf("\nThe closest user to %s is:\n\n", myUser.name);
+        printf("Name:\t%s", closestUser.name);
+        printf("\nDistance:\t%lf\n\n", closestUser.distance);
     }
 
     else
@@ -111,5 +116,26 @@ void scanOtherUsers(user temp[], int n)
 
 void findDistances(user origin, user temp1[], position temp2[], int n)
 {
+    for(int i = 0; i < n; ++i)
+    {
+        strcpy(temp2[i].name, temp1[i].name);
+
+        temp2[i].distance = sqrt((origin.longtitude - temp1[i].longtitude)*(origin.longtitude - temp1[i].longtitude) + (origin.latitude - temp1[i].latitude)*(origin.latitude - temp1[i].latitude) + (origin.altitude - temp1[i].altitude)*(origin.altitude - temp1[i].altitude));
+    }
+}
+
+position findClosestUser(position temp2[], int n)
+{
+    position temp;
+    temp = temp2[0];
     
+    for(int i = 1; i < n; ++i)
+    {
+        if(temp2[i].distance < temp.distance)
+        {
+            temp = temp2[i];
+        }
+    }
+
+    return temp;
 }
