@@ -6,6 +6,8 @@
 #include <string.h>
 #include <math.h>
 
+#define MAX 100
+
 typedef struct user
 {
     char name[50];
@@ -25,6 +27,7 @@ user scanUser();
 void scanOtherUsers(user temp[], int n);
 void findDistances(user origin, user temp1[], position temp2[], int n);
 position findClosestUser(position temp2[], int n);
+int scanFile(user fileData[], char fileName[]);
 
 int main()
 {
@@ -34,11 +37,7 @@ int main()
     user myUser;
     myUser = scanUser();
 
-    printf("\n%s's data:\n", myUser.name);
-    printf("\nLongtitude = %lf", myUser.longtitude);
-    printf("\nLatitude = %lf", myUser.latitude);
-    printf("\nAltitude = %lf", myUser.altitude);
-    printf("\nTime = %lf\n", myUser.time);
+    printf("\n%s's data successfully collected.\n", myUser.name);
     
     int userCount;
     char choice[10];
@@ -50,14 +49,35 @@ int main()
     if(strcmp(choice, f) == 0)
     {
         char fileName[50];
-        printf("Enter file name for the data:\t");
+        printf("\nEnter file name for the data:\t");
         scanf("%s", fileName);
+
+        user otherUsers[MAX];
+
+        int userCount = scanFile(otherUsers, fileName);
+
+        position otherUserPosition[userCount];
+
+        findDistances(myUser, otherUsers, otherUserPosition, userCount);
+
+        position closestUser;
+        closestUser = findClosestUser(otherUserPosition, userCount);
+
+        printf("\nThe closest user to %s is:\n\n", myUser.name);
+        printf("Name:\t%s", closestUser.name);
+        printf("\nDistance:\t%.3lf\n\n", closestUser.distance);
     }
 
     else if(strcmp(choice, m) == 0)
     {
         printf("\nInput number of other users:\t");
         scanf("%d", &userCount);
+
+        if(userCount == 0)
+        {
+            printf("\nPlease input valid number of users.\n\n");
+            return 0;
+        }
 
         user otherUsers[userCount];
 
@@ -72,7 +92,7 @@ int main()
 
         printf("\nThe closest user to %s is:\n\n", myUser.name);
         printf("Name:\t%s", closestUser.name);
-        printf("\nDistance:\t%lf\n\n", closestUser.distance);
+        printf("\nDistance:\t%.3lf\n\n", closestUser.distance);
     }
 
     else
@@ -138,4 +158,23 @@ position findClosestUser(position temp2[], int n)
     }
 
     return temp;
+}
+
+int scanFile(user fileData[], char fileName[])
+{
+    FILE *fptr = fopen(fileName, "r");
+
+    int count;
+    fscanf(fptr, "%d", &count);
+
+    for(int i = 0; i < count; ++i)
+    {
+        fscanf(fptr, "%s", fileData[i].name);
+        fscanf(fptr, "%lf", &fileData[i].longtitude);
+        fscanf(fptr, "%lf", &fileData[i].latitude);
+        fscanf(fptr, "%lf", &fileData[i].altitude);
+        fscanf(fptr, "%lf", &fileData[i].time);
+    }
+
+    return count;
 }
