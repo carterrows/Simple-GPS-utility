@@ -1,6 +1,6 @@
 // Mini Project 2
 // For ENGG1410
-// Made by Carter Rows - 1170615
+// Made by Carter Rows - 1170615, Chogizie - 1223747
 // November 2022
 
 // include required libraries
