@@ -1,6 +1,6 @@
 // Mini Project 2
 // For ENGG1410
-// Made by Carter Rows - 1170615, Chogizie - 1223747
+// Made by Carter Rows - 1170615
 // November 2022
 
 // include required libraries
@@ -51,15 +51,13 @@ int main()
     // declare a few required variables & constants
     int userCount;
     char choice[10];
-    char f[10] = "file";
-    char m[10] = "manual";
     
     // prompt for manual or file data collection
     printf("\nWould you like to manually enter other user data or use a file?\nPlease type 'file' or 'manual'\n\n");
     scanf("%s", choice);
 
     // path if user wants to use file data collection
-    if(strcmp(choice, f) == 0)
+    if(strcmp(choice, "file") == 0)
     {
         // collect file name
         char fileName[50];
@@ -91,7 +89,7 @@ int main()
     }
 
     // path if user wants to use manual data collection
-    else if(strcmp(choice, m) == 0)
+    else if(strcmp(choice, "manual") == 0)
     {
         // prompt for number of other users
         printf("\nInput number of other users:\t");
